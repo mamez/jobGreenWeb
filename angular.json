@@ -45,7 +45,8 @@
               "src/favicon.ico",
               "src/assets",
               "src/assets/css",
-              "src/assets/img"
+              "src/assets/img",
+              "src/assets/datatable"
             ],
             "styles": [
               "src/styles.css"
@@ -104,7 +105,8 @@
               "src/favicon.ico",
               "src/assets",
               "src/assets/css",
-              "src/assets/img"
+              "src/assets/img",
+              "src/assets/datatable"
             ]
           }
         },
