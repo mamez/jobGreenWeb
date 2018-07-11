@@ -15,6 +15,7 @@ import { JwtInterceptorService } from './services/jwt-interceptor.service';
 import { StorageService } from './services/storage.service';
 import { PruebaService } from './services/prueba.service';
 import { GmapsComponent } from './componentes/gmaps/gmaps.component';
+import { DataTableComponent } from './componentes/data-table/data-table.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { GmapsComponent } from './componentes/gmaps/gmaps.component';
     PrPublicoComponent,
     PromicionComponent,
     TipoReciclajeComponent,
-    GmapsComponent
+    GmapsComponent,
+    DataTableComponent
   ],
   imports: [
     BrowserModule,
