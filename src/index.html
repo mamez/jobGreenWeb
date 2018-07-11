@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>JobGreen</title>
+
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/nprogress/nprogress.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/custom.css">
+
+
+
+   <base href="/">
+</head>
+<body class="nav-md">
+  <jg-root></jg-root>
+  <script src="assets/js/jquery/jquery.min.js"></script>
+  <script  src="assets/css/bootstrap/js/bootstrap.min.js"></script>
+  <script  src="assets/js/fastclick/lib/fastclick.js"></script>
+  <script src="assets/css/nprogress/nprogress.js"></script>
+  <script  src="assets/js/custom.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJ_l02eBc3mby0IwBry9r0CU5nPuonSow" async defer></script>
+   <script>
+   $(document).ready(function() {
+    // TODO: This is some kind of easy fix, maybe we can improve this
+    var setContentHeight = function () {
+        // reset height
+        $('.right_col').css('min-height', $(window).height());
+
+        var bodyHeight = $('body').outerHeight(),
+            footerHeight = $('body').hasClass('footer_fixed') ? -10 : $('footer').height(),
+            leftColHeight = $('.left_col').eq(1).height() + $('.sidebar-footer').height(),
+            contentHeight = bodyHeight < leftColHeight ? leftColHeight : bodyHeight;
+
+        // normalize content
+        contentHeight -= $('.nav_menu').height() + footerHeight;
+
+        $('.right_col').css('min-height', contentHeight);
+    };
+
+    $('#sidebar-menu').find('a').on('click', function(ev) {
+        var $li = $(this).parent();
+
+        if ($li.is('.active')) {
+            $li.removeClass('active active-sm');
+            $('ul:first', $li).slideUp(function() {
+                setContentHeight();
+            });
+        } else {
+            // prevent closing menu if we are on child menu
+            if (!$li.parent().is('.child_menu')) {
+                $('#sidebar-menu').find('li').removeClass('active active-sm');
+                $('#sidebar-menu').find('li ul').slideUp();
+            }
+
+            $li.addClass('active');
+
+            $('ul:first', $li).slideDown(function() {
+                setContentHeight();
+            });
+        }
+    });
+
+    // toggle small or large menu
+    $('#menu_toggle').on('click', function() {
+        if ($('body').hasClass('nav-md')) {
+            $('#sidebar-menu').find('li.active ul').hide();
+            $('#sidebar-menu').find('li.active').addClass('active-sm').removeClass('active');
+        } else {
+            $('#sidebar-menu').find('li.active-sm ul').show();
+            $('#sidebar-menu').find('li.active-sm').addClass('active').removeClass('active-sm');
+        }
+
+        $('body').toggleClass('nav-md nav-sm');
+
+        setContentHeight();
+
+        $('.dataTable').each ( function () { $(this).dataTable().fnDraw(); });
+    });
+
+    // check active menu
+    $('#sidebar-menu').find('a[href="' + CURRENT_URL + '"]').parent('li').addClass('current-page');
+
+    $('#sidebar-menu').find('a').filter(function () {
+        return this.href == CURRENT_URL;
+    }).parent('li').addClass('current-page').parents('ul').slideDown(function() {
+        setContentHeight();
+    }).parent().addClass('active');
+
+    // recompute content when resizing
+    $(window).smartresize(function(){
+        setContentHeight();
+    });
+
+    setContentHeight();
+
+    // fixed sidebar
+    if ($.fn.mCustomScrollbar) {
+        $('.menu_fixed').mCustomScrollbar({
+            autoHideScrollbar: true,
+            theme: 'minimal',
+            mouseWheel:{ preventDefault: true }
+        });
+    }
+});
+// /Sidebar
+
+   </script>
+
+</body>
+</html>
